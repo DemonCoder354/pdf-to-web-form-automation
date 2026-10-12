@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Client Registry (demo)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="logo">CR</span> Client Registry</div>
+    <span class="tag">Demo CRM screen</span>
+  </header>
+
+  <main class="layout">
+    <section class="card">
+      <h1>New client</h1>
+      <p class="hint">Fill in all five fields and press <b>Save record</b>.</p>
+
+      <form id="client-form" novalidate autocomplete="off">
+        <label for="full_name">Full name</label>
+        <input id="full_name" name="full_name" type="text" placeholder="Jane Doe">
+
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="jane.doe@example.com">
+
+        <label for="phone">Phone</label>
+        <input id="phone" name="phone" type="tel" placeholder="+1 555 010 0000">
+
+        <label for="policy_number">Policy number</label>
+        <input id="policy_number" name="policy_number" type="text" placeholder="HL-000000">
+
+        <label for="city">City</label>
+        <input id="city" name="city" type="text" placeholder="Springfield">
+
+        <button id="save-btn" type="submit">Save record</button>
+        <p id="status" class="status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="card">
+      <div class="list-head">
+        <h2>Saved clients</h2>
+        <span id="count" class="count">0</span>
+      </div>
+      <ol id="records" class="records"></ol>
+      <p id="empty" class="empty">No clients saved yet.</p>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById("client-form");
+    const statusEl = document.getElementById("status");
+    const list = document.getElementById("records");
+    const countEl = document.getElementById("count");
+    const emptyEl = document.getElementById("empty");
+    const FIELDS = ["full_name", "email", "phone", "policy_number", "city"];
+    const RULES = {
+      email: v => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v) || "Email is not valid",
+      phone: v => (v.replace(/\D/g, "").length >= 7) || "Phone needs at least 7 digits",
+      policy_number: v => /^HL-\d{6}$/.test(v) || "Policy number must look like HL-123456",
+    };
+    const saved = new Set();
+
+    function setStatus(text, kind) {
+      statusEl.textContent = text;
+      statusEl.className = "status " + kind;
+    }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      FIELDS.forEach(f => form[f].classList.remove("invalid"));
+      const data = Object.fromEntries(FIELDS.map(f => [f, form[f].value.trim()]));
+
+      for (const f of FIELDS) {
+        const rule = RULES[f];
+        const verdict = !data[f] ? "All fields are required" : (rule ? rule(data[f]) : true);
+        if (verdict !== true) {
+          form[f].classList.add("invalid");
+          form[f].focus();
+          setStatus("Error: " + verdict, "error");
+          return;
+        }
+      }
+      if (saved.has(data.policy_number)) {
+        form.policy_number.classList.add("invalid");
+        setStatus("Error: policy " + data.policy_number + " is already saved", "error");
+        return;
+      }
+
+      saved.add(data.policy_number);
+      const li = document.createElement("li");
+      li.className = "record";
+      li.dataset.policy = data.policy_number;
+      li.textContent = FIELDS.map(f => data[f]).join("  |  ");
+      list.appendChild(li);
+      li.scrollIntoView({ block: "nearest" });
+      countEl.textContent = saved.size;
+      emptyEl.hidden = true;
+      setStatus("Saved: " + data.full_name, "ok");
+      form.reset();
+      form.full_name.focus();
+    });
+  </script>
+</body>
+</html>

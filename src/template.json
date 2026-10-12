@@ -1,0 +1,96 @@
+{
+  "source_pdf": "clients.pdf",
+  "sample_page": 1,
+  "fields": [
+    {
+      "field": "full_name",
+      "example": "Olivia Bennett",
+      "label": "Full name",
+      "direction": "left",
+      "dx": 59.88,
+      "dy": -1.59,
+      "label_pos": [
+        50.0,
+        167.66
+      ],
+      "value_pos": [
+        145.0,
+        166.07
+      ],
+      "pattern": "[^\\d@]*[A-Za-z][^\\d@]*",
+      "kind": "text"
+    },
+    {
+      "field": "email",
+      "example": "olivia.bennett@example.com",
+      "label": "Email",
+      "direction": "left",
+      "dx": 75.0,
+      "dy": -1.59,
+      "label_pos": [
+        50.0,
+        185.66
+      ],
+      "value_pos": [
+        145.0,
+        184.07
+      ],
+      "pattern": "[^@\\s]+@[^@\\s]+\\.[A-Za-z]{2,}",
+      "kind": "email"
+    },
+    {
+      "field": "phone",
+      "example": "+1 (555) 010-2231",
+      "label": "Phone",
+      "direction": "left",
+      "dx": 71.87,
+      "dy": -1.59,
+      "label_pos": [
+        310.0,
+        185.66
+      ],
+      "value_pos": [
+        405.0,
+        184.07
+      ],
+      "pattern": "\\+?[\\d\\s().-]{7,}",
+      "kind": "phone"
+    },
+    {
+      "field": "policy_number",
+      "example": "HL-482137",
+      "label": "POLICY NUMBER",
+      "direction": "above",
+      "dx": 0.0,
+      "dy": 13.62,
+      "label_pos": [
+        56.0,
+        332.45
+      ],
+      "value_pos": [
+        56.0,
+        346.07
+      ],
+      "pattern": "[A-Z]{2}\\-\\d{6}",
+      "kind": "code"
+    },
+    {
+      "field": "city",
+      "example": "Portland",
+      "label": "City",
+      "direction": "left",
+      "dx": 81.22,
+      "dy": -1.59,
+      "label_pos": [
+        50.0,
+        239.66
+      ],
+      "value_pos": [
+        145.0,
+        238.07
+      ],
+      "pattern": "[^\\d@]*[A-Za-z][^\\d@]*",
+      "kind": "text"
+    }
+  ]
+}
