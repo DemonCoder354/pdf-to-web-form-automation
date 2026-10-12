@@ -135,7 +135,7 @@ The form after the run:
 
 1. Clone the repository and open the `src` folder (all commands below run from there):
    ```bash
-   git clone https://github.com/YOUR-GITHUB/pdf-to-web-form-automation.git
+   git clone https://github.com/DemonCoder354/pdf-to-web-form-automation.git
    cd pdf-to-web-form-automation/src
    ```
 2. Install the dependencies and the browser (a virtual environment is recommended):
