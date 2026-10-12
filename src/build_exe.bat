@@ -7,7 +7,8 @@ python -m PyInstaller --noconfirm --clean --windowed --name PDF-to-Web-Form --di
 xcopy /E /I /Y demo_form ..\program\PDF-to-Web-Form\demo_form >nul
 xcopy /E /I /Y sample_data ..\program\PDF-to-Web-Form\sample_data >nul
 copy /Y template.json ..\program\PDF-to-Web-Form\ >nul
-powershell -NoProfile -Command "Compress-Archive -Path '..\program\PDF-to-Web-Form' -DestinationPath '..\program\PDF-to-Web-Form.zip' -Force" || goto :error
+del /Q ..\program\PDF-to-Web-Form.zip 2>nul
+tar -a -c -f ..\program\PDF-to-Web-Form.zip -C ..\program PDF-to-Web-Form || goto :error
 echo.
 echo Done: program\PDF-to-Web-Form\PDF-to-Web-Form.exe
 echo Zip for GitHub Releases: program\PDF-to-Web-Form.zip
